@@ -3,3 +3,6 @@ This repository describes the goals and governance of WPEC Subgroup 43 (SG43). T
 
 ## License
 This repository is distributed according to the [LICENSE](LICENSE) file. All contributions made by employees of Los Alamos National Laboratory are governed by that license.
+
+C Number:C17049
+Copyright (c) 2017,Los Alamos National Security,LLC.All rights reserved.   
