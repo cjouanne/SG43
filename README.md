@@ -4,7 +4,7 @@ This repository describes the goals and governance of WPEC Subgroup 43 (SG43). T
 ## Agendas
 Here is a list of agendas for the meetings held for SG43.
 
-- [May 17, 2017. OECD Headquarters, Paris, France.](https://github.com/GeneralizedNuclearData/SG43/blob/master/Agendas/May2017.md)
+- [May 16, 2017. OECD Headquarters, Paris, France.](https://github.com/GeneralizedNuclearData/SG43/blob/master/Agendas/May2017.md)
 
 ## License
 This repository is distributed according to the [LICENSE](LICENSE) file. All contributions made by employees of Los Alamos National Laboratory are governed by that license.
