@@ -9,7 +9,4 @@ Conflict can cause progress to come to a screeching halt. While some disagreemen
     2. Make formal proposal/presentation describing each side.
     3. Reach a consensus.
 
- 3. **Decision will be made by SG43 leadership.** If, after tabling the discussion, a consensus is still not found, the decision will be made the SG43 leadership team:
-    - Fausto Malvagi
-    - Caleb Mattoon
-    - Jeremy Conlin
+ 3. **Decision will be made by clear majority of meeting participants** If, after tabling the discussion, a consensus is still not found, the decision will be made by a clear majority of the participants in the meeting. 
