@@ -1,0 +1,119 @@
+Comments on physics Rules 
+
+1 Cross Section Errors
+1.1. Monotonically increasing energy grid
+(a) Discontinuity with > 2 equivalent energy points.
+Comment : > 2 or 2 ? Example : H2 in JEFF-3.2 library at 14:25MeV . Energy
+grid : 13:75; 14; 14:25; 14; 14:75MeV . Exception : Limits of resonance ranges, RRRURR,
+RRR-Continuum and URR-Continuum.
+1.2. Strictly positive energy values. OK
+1.3. No negative cross section values.
+Comment : Needs reconstruction in RRR and URR ranges. OK for continuum energy
+range.
+1.4. Kinematic threshold for threshold reactions The kinematic threshold is defined as
+Th = 􀀀Q(A + An)=A
+Where Q is the Q-value, A and An are the atomic mass numbers for the nucleus
+and the incident particle (i.e., neutron) respectively.
+Comment : First point in energy grid in MF3 should be in agreement with first
+incoming energy in MF4, MF5, MF6. . . If not, in Monte Carlo calculation, you can
+sample a reaction but you don’t find energy-angle distribution if first energy in MF6
+is higher than kinematic threshold. Example : MT749, O16 in ENDF/B-VII.b4.
+Threshold MF3 = 22.864 MeV. First energy in MF6/MT749 : 23.86 MeV for N14.
+1.5. Do partial cross sections sum to total ? In the case of small cross sections, sometimes
+it’s impossible to have total = sum of partial. Example for a 4 digits format :
+p1=1.00003 (p1f = 1.0000 in format file), p2=1.00004 (p2f = 1.0000 in format file),
+sum=p1+p2 = 2.00007 (2.0001 in format file), but p1f+p2f=2.0000
+1.6. Check abnormally large (e.g., > 1E6) or abnormally small (e.g., 1E - 6) cross
+section values. This is a rule that could be parameterized so that something really
+bad is an error, whereby something just kind of big would be flagged as a warning.
+It also has to be knowledgeable of charged particle reactions which have a Coulomb
+barrier.
+Comment : 10^-􀀀6 is a very high threshold for this kind of physics quantity. Example :
+elastic scattering S36(n,n) in JEFF-3.2 evaluation file
+
+
+2 Secondary distribution errors
+2.1. Monotonically increasing energy grid
+2.2. Monotonically increasing cosine grid
+2.3. Secondary energy <= to incident energy There are certainly some exceptions to this,
+but as a general rule, this should stand.
+Comment : Reaction with positive Q-value should be an exception.
+2.4. No negative angular probability values.
+Comment : Right, it’s easy to check this point if angular description uses a 2-D
+( mu; p( mu)). In the case of Legendre polynomials, this needs a reconstruction.
+2.5. No abnormally small angular probability values
+
+
+2.1 Multiplicity errors
+2.1.1. Monotonically increasing energy grid
+2.1.2. No negative multiplicity values
+2.1.3. No abnormally large or small multiplicity values
+Comment : Integer multiplicities should be checked for specific reactions. Ex : (n,2n),
+nu= 2, not 1:999999 for neutrons.
+
+
+2.2 Fission nu Errors
+Fission nu errors are just a special case of multiplicity errors
+2.2.1. Monotonically increasing energy grid
+2.2.2. No negative nu values
+2.2.3. Delayed neutron fraction must sum to 1.0
+
+2.3 Additional comments
+– Available Energy (AE) in a reaction depends on incident energy and Reaction QValue.
+AE should be used to check energy balance. It is possible to verify that the
+sum of energies of outgoing particles is lower or equal to AE. The sum could be
+lower than AE if all particles are not described.
+– For each energy distribution, it is possible to check that the higher energy limit and
+the average energy are lower than AE. This could be applied for massive particles
+and gamma
+– Description of gamma cascade for discrete inelastic scatterings. It’s a crucial point
+for analog calculations. ENDF-6 offers two major opportunities to describe the decay
+of an excited state (in the case of inelastic scattering but also for discrete transfer
+reactions) :
+– The first one (best one) is the use of MF12. In this case, for each excited state,
+you find the decay probability to lower states, without cascade. Only one gamma
+emission is suggested. So, it’s possible to reconstruct the gamma cascade with
+right probabilities.
+– The second one (“bad” one) is the use of double differential energy-angle distributions
+(MF6). In this case, you find a gamma multiplicity (which could differ to
+one) and a composite discrete-continuous energy spectra.
+– A important number of evaluation files contain gamma multiplicity lower than
+one. This could be possible in the case of outgoing metastable state or competitive
+decay mode. But, a careful study shows that it is not always the case.
+– This description implies the loose of correlation between consecutive gamma
+emission from excited states. Example : Al27 from ENDF/B-VIII.b4, second
+excited state (MT52). Description used : MF6. Excited energy : 1.014 MeV.
+Gamma decay modes :
+– 3% to 1st state at 843 keV (emission of a 170keV gamma), then decay to GS
+(843keV gamma). 100% Correlation between those two gamma.
+– 97% to GS , 1.014 MeV
+In evaluation file, 170keV and 843keV have the same probability : 2:8% and
+1.014MeV has a 94:4% probability. Total multiplicity is 1.029. The average
+energy balance is well described, but, using multiplicity and probabilities it
+is tricky to reconstruct the correlation. This case is quite easy, for an higher
+excited state, it becomes impossible.
+– JEFF-Libraries and ENDF/B-Libraries very often use Lin-Lin interpolation between
+incident projectile energies for angular, energy, angle-energy distribution. The use of
+Unit-Base Lin-Lin should be preferable. JENDL Libraries apply this modification.
+Patholigical cases : If you use a dirac description (closed to discontinuities) for
+gamma decay in a continuous spectrum, the use of Unite Base Lin-Lin implies the
+loose of this discrete gamma rays.
+– Some evaluation files use double differential angle-energy (MF6) description for outgoing
+neutron in the case of inelastic scattering and MF12/MF14 for gamma production.
+This is mot the optimized way to describe the kinematics.
+These comments are linked to ENDF-6 format files, but, it would be an improvement to
+take them into account in GNDS
+
+3 Resonance Errors
+3.1 Resolved Resonance Region
+The ~ J =~l + ~s should be verified. J value is given in ENDF-6 format, sometimes, it’s
+impossible to obtain this value using l and s. It could be applied in URR. Ex : U241 and
+Pu243 in ENDF/B-VIII.b4 library
+– auto-correlation for level spacing could be checked
+– Gamma distributions could be studied
+– SLBW and MLBW : partial reactions sum to total
+3.2 Unresolved Resonance Region
+– Partial reactions sum to total
+– No negatives probability table values
+In the case of LSSF=1, comparisons between Tabulated cross sections in evaluation and
+calculated average cross sections could be made.
